@@ -1,0 +1,8 @@
+{
+    "version": "0.1.0",
+    "command": "${cwd}/node_modules/.bin/tsc",
+    "isShellCommand": true,
+    "args": ["-p", "."],
+    "showOutput": "silent",
+    "isBackground": true
+}
