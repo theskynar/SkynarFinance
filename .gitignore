@@ -4,5 +4,6 @@ lib
 node_modules/*
 npm-debug.log
 *.js.map
+*.js
 !gulpfile.js
 .env
