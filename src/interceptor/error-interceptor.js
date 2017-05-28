@@ -12,9 +12,9 @@ const kamboja_1 = require("kamboja");
 class RouteInterceptor {
     intercept(invocation) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (invocation.hasController)
+            if (invocation.hasController() || invocation.url.href.match("static"))
                 return invocation.execute();
-            return new kamboja_1.ViewActionResult({}, 'index', null);
+            return new kamboja_1.ViewActionResult({}, 'home/index', null);
         });
     }
 }

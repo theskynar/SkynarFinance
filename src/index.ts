@@ -11,11 +11,14 @@ import RouteInterceptor from './interceptor/error-interceptor'
 let ExpressApp = express()
 ExpressApp.use(BodyParser.json())
 ExpressApp.use(cors())
+ExpressApp.use(express.static('www'))
+ExpressApp.set('views', __dirname + '/view')
 ExpressApp.set("view engine", "hbs")
 
 let kamboja = new Kamboja(new ExpressEngine(ExpressApp), {
     rootPath: __dirname,
-    showConsoleLog: true
+    showConsoleLog: true,
+    interceptors: [new RouteInterceptor()]
 });
 
 Mongoose.connect("mongodb://mbordin:bordin98@ds061188.mlab.com:61188/tserp", err => {

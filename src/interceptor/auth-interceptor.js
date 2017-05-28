@@ -13,13 +13,13 @@ const jwt = require("jsonwebtoken");
 class AuthInterceptor {
     intercept(invocation) {
         return __awaiter(this, void 0, void 0, function* () {
-            const token = invocation.request.getHeader('x-access-token');
+            const token = invocation.invocation.request.getHeader('x-access-token');
             if (!token)
                 return new kamboja_1.JsonActionResult({ message: "Usuário nao autenticado" }, 401, null);
             let decoded = jwt.verify(token, "SAHgsAHSGaJSA&SA");
             if (!decoded)
                 return new kamboja_1.JsonActionResult({ message: "Token inválido" }, 401, null);
-            invocation.request.user = decoded;
+            invocation.invocation.request.user = decoded;
             return invocation.execute();
         });
     }
