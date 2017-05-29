@@ -21,6 +21,8 @@ let kamboja = new Kamboja(new ExpressEngine(ExpressApp), {
     interceptors: [new RouteInterceptor()]
 });
 
+//dev port: mongodb://localhost:27017/tserp
+
 Mongoose.connect("mongodb://mbordin:bordin98@ds061188.mlab.com:61188/tserp", err => {
     if(err) console.log(err);
 });

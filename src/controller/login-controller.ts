@@ -24,5 +24,18 @@ export namespace v1 {
         .catch(err => this.json(err, 500))
     }
 
+    @http.post()
+    email(){
+      let email = this.request.body.email
+      if(!email)
+        return this.json({}, 400)
+
+      return CustomerOdm.find({email}).exec()
+        .then(data => data.length > 0 ? 
+                      this.json(new Error("Email ja esta em uso"), 400) : 
+                      this.json({email}, 200))
+        .catch(err => this.json(err, 500))
+    }
+
   }
 }
