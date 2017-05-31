@@ -1,4 +1,4 @@
-import { Controller, interceptor, http, val } from 'kamboja'
+import { Controller, interceptor, http, val, JsonActionResult } from 'kamboja'
 import { TaskModel } from '../model/task-model'
 import { TaskOdm } from '../model/mongoose-odm'
 import Auth from '../interceptor/auth-interceptor'
@@ -13,7 +13,8 @@ export namespace v1 {
     list() {
 
       let customer = this.request.user._id
-      return TaskOdm.find().exec()
+      if(!customer) return new JsonActionResult(null, 401, null)
+      return TaskOdm.find({customer}).exec()
         .then(data => this.json(data, 200))
         .catch(err => this.json(err, 500))
     }
