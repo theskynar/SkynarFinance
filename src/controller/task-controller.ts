@@ -21,6 +21,8 @@ export namespace v1 {
     @http.post('')
     add() {
       let task: TaskModel = this.request.body
+      let data = task.diaMes.toString().split('/')
+      task.diaMes = new Date(parseInt(data[2]), parseInt(data[1]) - 1, parseInt(data[0]))
       return global['taskService'].addTask(task)
         .then(data => this.json(data, 200))
         .catch(err => this.json(err, 500))

@@ -20,6 +20,8 @@ export namespace v1 {
     }
 
     add(@val.type("DespesaModel, model/despesa-model") despesa: DespesaModel){
+      let data = despesa.data.toString().split('/')
+      despesa.data = new Date(parseInt(data[2]), parseInt(data[1]) - 1, parseInt(data[0]))
       return new DespesaOdm(despesa).save()
     }
 

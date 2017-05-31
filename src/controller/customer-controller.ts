@@ -11,7 +11,8 @@ export namespace v1 {
     }
 
     add(@val.type("CustomerModel, model/customer-model") customer: CustomerModel){
-      console.log(customer)
+      let nascimento = customer.nascimento.toString().split('/')
+      customer.nascimento = new Date(parseInt(nascimento[2]), parseInt(nascimento[1]) - 1, parseInt(nascimento[0]))
       return new CustomerOdm(customer).save()
     }
 

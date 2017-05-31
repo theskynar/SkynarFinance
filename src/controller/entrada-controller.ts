@@ -20,6 +20,8 @@ export namespace v1 {
     }
 
     add(@val.type("EntradaModel, model/entrada-model") entrada: EntradaModel){
+      let data = entrada.data.toString().split('/')
+      entrada.data = new Date(parseInt(data[2]), parseInt(data[1]) - 1, parseInt(data[0]))
       return new EntradaOdm(entrada).save()
     }
 

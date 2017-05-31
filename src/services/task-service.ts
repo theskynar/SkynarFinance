@@ -132,12 +132,16 @@ export class TaskService {
   }
 
   private createTask(item: TaskModel) {
-      let data = new Date(item.diaMes)
-      let dia = data.getDate()
-      let mes = data.getMonth() + 1
-      let intervalo = `${mes}-${mes + item.tempo}`
+      let timePorMes = 2678400000
+      let limiteMaximo = (timePorMes * item.tempo) - 259200000
 
-      let task = cron.schedule(`1-59 * * * *`, () => {
+      let data = new Date(item.diaMes)
+      let time = data.getTime()
+      let dia = data.getDate()
+
+      let task = cron.schedule(`1 0 0 ${dia} * *`, () => {
+
+        let timeAtual = new Date().getTime()  
 
         let lancamento = {
           customer: item.customer,
@@ -156,6 +160,9 @@ export class TaskService {
           new DespesaOdm(lancamento).save()
             .then()
             .catch(err => console.error(err))
+
+        
+        if(timeAtual - time >= limiteMaximo) this.stopTask(item._id)
 
       }, item.ativo)
 
