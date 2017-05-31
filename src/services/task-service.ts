@@ -162,7 +162,7 @@ export class TaskService {
             .catch(err => console.error(err))
 
         
-        if(timeAtual - time >= limiteMaximo) this.stopTask(item._id)
+        if((timeAtual - time >= limiteMaximo) && item.tempo > 0) this.stopTask(item._id)
 
       }, item.ativo)
 
