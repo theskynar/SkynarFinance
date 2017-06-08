@@ -1,6 +1,9 @@
 import { ApiController, Core, val } from 'kamboja'
 import { CustomerModel } from '../model/customer-model'
 import { CustomerOdm } from '../model/mongoose-odm'
+import * as Crypt from "node-crypt"
+
+let crypto = new Crypt({key: process.env.CRYPT_HASH})
 
 export namespace v1 {
 
@@ -12,6 +15,8 @@ export namespace v1 {
 
     add(@val.type("CustomerModel, model/customer-model") customer: CustomerModel){
       let nascimento = customer.nascimento.toString().split('/')
+      customer.password = crypto.encrypt(customer.password)
+
       customer.nascimento = new Date(parseInt(nascimento[2]), parseInt(nascimento[1]) - 1, parseInt(nascimento[0]))
       return new CustomerOdm(customer).save()
     }

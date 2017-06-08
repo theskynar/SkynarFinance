@@ -2,6 +2,9 @@ import { Controller, http } from 'kamboja'
 import { CustomerModel } from '../model/customer-model'
 import { CustomerOdm } from '../model/mongoose-odm'
 import * as jwt from "jsonwebtoken"
+import * as Crypt from "node-crypt"
+
+let crypto = new Crypt({key: process.env.CRYPT_HASH})
 
 export namespace v1 {
 
@@ -13,12 +16,15 @@ export namespace v1 {
 
       if(!usuario.email || !usuario.password) 
         return this.json({message: "Email e senha são obrigatórios"}, 400)
+        
+      usuario.password = crypto.encrypt(usuario.password)
+      console.log(usuario.password)
 
       return CustomerOdm.findOne(usuario)
         .exec()
         .then(customer => {
           let tokenContent = {_id: customer._id, nome: customer.nome, email: customer.email}
-          var token = jwt.sign(tokenContent, "SAHgsAHSGaJSA&SA", {expiresIn: "1d"})
+          var token = jwt.sign(tokenContent, process.env.JWT_HASH, {expiresIn: "1d"})
           return this.json({ok: true, body: customer, token})
         })
         .catch(err => this.json(err, 500))

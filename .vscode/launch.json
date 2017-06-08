@@ -2,17 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch via NPM",
             "type": "node",
             "request": "launch",
-            "name": "Launch via NPM",
+            "cwd": "${workspaceRoot}",
             "runtimeExecutable": "npm",
-            "windows": {
-                "runtimeExecutable": "npm.cmd"
-            },
             "runtimeArgs": [
-                "start"
+                "run-script", "debug"
             ],
-            "port": 5000
+            "port": 5858
         },
         {
             "type": "node",

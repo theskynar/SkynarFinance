@@ -8,7 +8,7 @@ export default class AuthInterceptor implements Core.RequestInterceptor {
         if(!token) 
             return new JsonActionResult({ message: "Usuário nao autenticado" }, 401, null)
         
-        let decoded = jwt.verify(token, "SAHgsAHSGaJSA&SA");
+        let decoded = jwt.verify(token, process.env.JWT_HASH);
         if(!decoded) 
             return new JsonActionResult({ message: "Token inválido" }, 401, null)
 
