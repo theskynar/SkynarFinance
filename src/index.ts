@@ -24,7 +24,7 @@ let kamboja = new Kamboja(new ExpressEngine(ExpressApp), {
 //dev mongo: mongodb://localhost:27017/tserp
 //prod mongo: mongodb://mbordin:bordin98@ds061188.mlab.com:61188/tserp
 
-Mongoose.connect("mongodb://mbordin:bordin98@ds061188.mlab.com:61188/tserp", err => {
+Mongoose.connect(process.env.MONGOOSE_URI, err => {
     if(err) console.log(err);
 });
 (<any>Mongoose).Promise = global.Promise
